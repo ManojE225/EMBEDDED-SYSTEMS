@@ -1,0 +1,72 @@
+char command; // Variable to store incoming command from Serial Monitor
+
+// Define pins for LEDs (simulating relays)
+const int fanPin = 2;    // LED 1 - Fan
+const int light1Pin = 3; // LED 2 - Light 1
+const int light2Pin = 4; // LED 3 - Light 2
+const int light3Pin = 5; // LED 4 - Light 3
+
+void setup() {
+  Serial.begin(9600); // Start serial communication
+
+  // Set LED pins as outputs
+  pinMode(fanPin, OUTPUT);
+  pinMode(light1Pin, OUTPUT);
+  pinMode(light2Pin, OUTPUT);
+  pinMode(light3Pin, OUTPUT);
+
+  // Turn off all LEDs initially
+  digitalWrite(fanPin, LOW);
+  digitalWrite(light1Pin, LOW);
+  digitalWrite(light2Pin, LOW);
+  digitalWrite(light3Pin, LOW);
+
+  Serial.println("Home Automation Ready - Send 1-8:");
+  Serial.println("1: Fan ON, 2: Fan OFF");
+  Serial.println("3: Light 1 ON, 4: Light 1 OFF");
+  Serial.println("5: Light 2 ON, 6: Light 2 OFF");
+  Serial.println("7: Light 3 ON, 8: Light 3 OFF");
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    command = Serial.read(); // Read command
+
+    switch (command) {
+      case '1': // Fan ON
+        digitalWrite(fanPin, HIGH);
+        Serial.println("Fan turned ON");
+        break;
+      case '2': // Fan OFF
+        digitalWrite(fanPin, LOW);
+        Serial.println("Fan turned OFF");
+        break;
+      case '3': // Light 1 ON
+        digitalWrite(light1Pin, HIGH);
+        Serial.println("Light 1 turned ON");
+        break;
+      case '4': // Light 1 OFF
+        digitalWrite(light1Pin, LOW);
+        Serial.println("Light 1 turned OFF");
+        break;
+      case '5': // Light 2 ON
+        digitalWrite(light2Pin, HIGH);
+        Serial.println("Light 2 turned ON");
+        break;
+      case '6': // Light 2 OFF
+        digitalWrite(light2Pin, LOW);
+        Serial.println("Light 2 turned OFF");
+        break;
+      case '7': // Light 3 ON
+        digitalWrite(light3Pin, HIGH);
+        Serial.println("Light 3 turned ON");
+        break;
+      case '8': // Light 3 OFF
+        digitalWrite(light3Pin, LOW);
+        Serial.println("Light 3 turned OFF");
+        break;
+      default:
+        Serial.println("Invalid command! Use 1-8.");
+    }
+  }
+}
